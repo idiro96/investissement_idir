@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="duplication_asset_list">
+            <field name="name">Duplication Asset list</field>
+            <field name="model">duplication.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="duplication"/>
+                    </group>
+                    <footer>
+                        <button name="button_duplication" string="Duplication" type="object" class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+

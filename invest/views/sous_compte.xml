@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="compte_list">
+            <field name="name">Compte</field>
+            <field name="model">invest.sous.compte.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Sous Compte"/>
+                    <field name="libelle" string="Libelle"/>
+                    <field name="compte" string="Compte"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="compte_form">
+            <field name="name">Compte</field>
+            <field name="model">invest.sous.compte.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Sous Compte"/>
+                            <field name="libelle" string="Libelle"/>
+                            <field name="compte" string="Compte" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="sous_compte_action_window">
+            <field name="name">Compte</field>
+            <field name="res_model">invest.sous.compte.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Sous Compte" id="sous_compte_asset1" parent="invistissement_gestion1"
+                  action="sous_compte_action_window" sequence="7"/>
+
+    </data>
+</odoo>

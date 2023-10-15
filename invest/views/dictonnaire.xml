@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="dictonnaire_list">
+            <field name="name">Dictonnaire Investissement List</field>
+            <field name="model">invest.dictonnaire</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="code" string="Code"/>
+                     <field name="designation" string="Designation"/>
+                     <field name="category_id1" string="Category"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="dictonnaire_form">
+            <field name="name">dictonnaire Investissement Form</field>
+            <field name="model">invest.dictonnaire</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code" string="Code"/>
+                                <field name="designation" string="Designation"/>
+                            </group>
+                            <group>
+                                <field name="category_id1" string="Category" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="dictonnaire_action_window">
+            <field name="name">Investissement Dictonnaire </field>
+            <field name="res_model">invest.dictonnaire</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        <menuitem name="Dictonnaire" id="invistissement_dictonnaire" parent="invistissement.menu_root"/>-->
+        <menuitem name="Dictonnaire Investissement" id="invistissement_dictonnaire" parent="invistissement_gestion1"
+                  action="dictonnaire_action_window" sequence="3"/>
+
+
+    </data>
+</odoo>

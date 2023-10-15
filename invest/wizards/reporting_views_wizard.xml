@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+     <record id="action_account_asset_wizard" model="ir.actions.act_window">
+            <field name="name">Account asset</field>
+            <field name="res_model">affectation.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           <field name="view_id" ref="invest.affectation_asset_list"/>
+           <field name="target">new</field>
+     </record>
+
+
+    <menuitem name="Reporting" id="invistissement_rapport1" parent="invest.menu_root"/>
+    <menuitem name="Repertoire des investissements" id="repertoire_investissementss" parent="invistissement_rapport1"
+           action="action_account_asset_wizard"/>
+
+
+</odoo>

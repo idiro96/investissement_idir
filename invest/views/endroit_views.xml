@@ -1,0 +1,260 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="endroit_list">
+            <field name="name">endroit list</field>
+            <field name="model">invest.endroit</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="intitule"/>
+                    <field name="parent_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="endroit_form">
+            <field name="name">Lieu form</field>
+            <field name="model">invest.endroit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="typetest" string="Type Lieu" widget="radio" options="{'horizontal': true}"
+                            />
+                            <field name="code"/>
+                            <field name="intitule"/>
+                            <field name="parent_id" domain="[('typetest', '!=', 'endroit')]" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        </group>
+                        <notebook>
+                            <page string="Liste des Investissements">
+                                <field name="endroit_ligne_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"></field>
+                        <field name="message_ids" widget="mail_thread"></field>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+<!--                <record model="ir.ui.view" id="bureau_list">-->
+<!--                    <field name="name">Bureau list</field>-->
+<!--                    <field name="model">invistissement.endroit</field>-->
+<!--                    <field name="arch" type="xml">-->
+<!--                        <tree>-->
+<!--                            <field name="code"/>-->
+<!--                            <field name="intitule"/>-->
+<!--                            <field name="parent_id"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </record>-->
+
+<!--                <record model="ir.ui.view" id="bureau_form">-->
+<!--                    <field name="name">Bureau form</field>-->
+<!--                    <field name="model">invistissement.endroit</field>-->
+<!--                    <field name="arch" type="xml">-->
+<!--                        <form>-->
+<!--                            <sheet>-->
+<!--                                <group>-->
+<!--                                    <field name="typetest" widget="radio" class="oe_edit_only" options="{'horizontal': true}"-->
+<!--                                           invisible="1"/>-->
+<!--                                    <field name="code"/>-->
+<!--                                    <field name="intitule"/>-->
+<!--                                    <field name="parent_id" domain="[('typetest', '=', 'batiment')]"/>-->
+<!--                                </group>-->
+<!--                            </sheet>-->
+<!--                            <div class="oe_chatter">-->
+<!--                                <field name="message_follower_ids" widget="mail_followers"></field>-->
+<!--                                <field name="message_ids" widget="mail_thread"></field>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </field>-->
+<!--                </record>-->
+
+
+        <!--        <record model="ir.ui.view" id="batiment_list">-->
+        <!--            <field name="name">Batiment list</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <tree>-->
+        <!--                    <field name="code"/>-->
+        <!--                    <field name="intitule"/>-->
+        <!--                    <field name="parent_id"/>-->
+        <!--                </tree>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.ui.view" id="batiment_form">-->
+        <!--            <field name="name">Batiment form</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <sheet>-->
+        <!--                        <group>-->
+        <!--                            <field name="typetest" widget="radio" class="oe_edit_only" options="{'horizontal': true}"-->
+        <!--                                   invisible="0"/>-->
+        <!--                            <field name="code"/>-->
+        <!--                            <field name="intitule"/>-->
+        <!--                            <field name="parent_id" domain="[('typetest', '=', 'site')]"/>-->
+        <!--                        </group>-->
+        <!--                        <notebook>-->
+        <!--                            <page string="Liste des Investissements">-->
+        <!--                                <field name="endroit_ligne_ids"/>-->
+        <!--                            </page>-->
+        <!--                        </notebook>-->
+        <!--                    </sheet>-->
+        <!--                    <div class="oe_chatter">-->
+        <!--                        <field name="message_follower_ids" widget="mail_followers"></field>-->
+        <!--                        <field name="message_ids" widget="mail_thread"></field>-->
+        <!--                    </div>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!--        <record model="ir.ui.view" id="region_list">-->
+        <!--            <field name="name">Region list</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <tree>-->
+        <!--                    <field name="code"/>-->
+        <!--                    <field name="intitule"/>-->
+        <!--                    <field name="parent_id"/>-->
+        <!--                </tree>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.ui.view" id="region_form">-->
+        <!--            <field name="name">Region form</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <sheet>-->
+        <!--                        <group>-->
+        <!--                            <field name="typetest" widget="radio" class="oe_edit_only" options="{'horizontal': true}"-->
+        <!--                                   invisible="1"/>-->
+        <!--                            <field name="code"/>-->
+        <!--                            <field name="intitule"/>-->
+        <!--                            <field name="parent_id" domain="[('typetest', '=', 'region')]"/>-->
+        <!--                        </group>-->
+        <!--                    </sheet>-->
+        <!--                    <div class="oe_chatter">-->
+        <!--                        <field name="message_follower_ids" widget="mail_followers"></field>-->
+        <!--                        <field name="message_ids" widget="mail_thread"></field>-->
+        <!--                    </div>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!--        <record model="ir.ui.view" id="site_list">-->
+        <!--            <field name="name">Site list</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <tree>-->
+        <!--                    <field name="code"/>-->
+        <!--                    <field name="intitule"/>-->
+        <!--                    <field name="parent_id"/>-->
+        <!--                </tree>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.ui.view" id="site_form">-->
+        <!--            <field name="name">site form</field>-->
+        <!--            <field name="model">invistissement.endroit</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <sheet>-->
+        <!--                        <group>-->
+        <!--                            <field name="typetest" widget="radio" class="oe_edit_only" options="{'horizontal': true}"-->
+        <!--                                   invisible="1"/>-->
+        <!--                            <field name="code"/>-->
+        <!--                            <field name="intitule"/>-->
+        <!--                            <field name="parent_id" domain="[('typetest', '=', 'region')]"/>-->
+        <!--                        </group>-->
+        <!--                    </sheet>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="endroit_action_window">
+            <field name="name">Lieu</field>
+            <field name="res_model">invest.endroit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('typetest', '!=', 'endroit')]</field>
+            <field name="view_id" ref="endroit_list"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="bureau_action_window">
+            <field name="name">Bureau</field>
+            <field name="res_model">invest.endroit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('typetest', '=', 'bureau')]</field>
+            <field name="context">{'default_typetest': 'bureau'}</field>
+            <field name="view_id" ref="endroit_list"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="batiment_action_window1">
+            <field name="name">Batiments</field>
+            <field name="res_model">invest.endroit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('typetest', '=', 'batiment')]</field>
+            <field name="context">{'default_typetest': 'batiment'}</field>
+            <field name="view_id" ref="endroit_list"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="region_action_window">
+            <field name="name">Region</field>
+            <field name="res_model">invest.endroit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('typetest', '=', 'region')]</field>
+            <field name="context">{'default_typetest': 'region'}</field>
+            <field name="view_id" ref="endroit_list"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="site_action_window">
+            <field name="name">Sites</field>
+            <field name="res_model">invest.endroit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('typetest', '=', 'site')]</field>
+            <field name="context">{'default_typetest': 'site'}</field>
+            <field name="view_id" ref="endroit_list"/>
+        </record>
+
+        <menuitem name="Investissement" id="invest.menu_root" web_icon="invest,description/icon.png"/>
+        <menuitem name="Reférentiel" id="invistissement_reference" parent="invest.menu_root"/>
+
+        <menuitem name="Lieu" id="invistissement_lieu" parent="invistissement_reference"
+                  sequence="1"/>
+
+        <menuitem name="Lieu" id="invistissement_lieu1" parent="invistissement_lieu"
+                  action="endroit_action_window" sequence="1"/>
+
+
+        <menuitem name="Bureau" id="invistissement_bureau_list" parent="invistissement_lieu"
+                  action="bureau_action_window" sequence="5"/>
+
+
+        <menuitem name="Batiment" id="invistissement_batiment1" parent="invistissement_lieu"
+                  action="batiment_action_window1" sequence="4"/>
+
+        <menuitem name="Region" id="invistissement_region" parent="invistissement_lieu"
+                  action="region_action_window" sequence="2"/>
+
+
+        <menuitem name="Sites" id="invistissement_site" parent="invistissement_lieu"
+                  action="site_action_window" sequence="3"/>
+
+
+    </data>
+</odoo>

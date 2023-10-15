@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_lieu">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="text-align:center;">
+                    <h2>FICHE D'INVENTAIRE PHYSIQUE</h2>
+                </div>
+                <br></br>
+                <div style="border: 1px solid; width: 100%;text-align:center;">
+                    <div style="padding:10px;font-size:18px;">
+                        <p>
+                            Bureau :
+                            <t t-esc="docs.intitule"/>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+                <div class="row" style="margin:30px;">
+                    <table border="1" class="table table-bordered"
+                           style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;">
+                                    <strong>N°</strong>
+                                </th>
+                                <th style="text-align:center;">
+                                    <strong>N d'inventaire</strong>
+                                </th>
+                                <th style="text-align:center;">
+                                    <strong>Désignation</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="line_count" t-value="1"/>
+                            <t t-foreach="docs.endroit_ligne_ids" t-as="endroit">
+                                <tr>
+                                    <td>
+                                        <t t-esc="line_count"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="endroit.numero_inventaire"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="endroit.name"/>
+                                    </td>
+                                </tr>
+                                <t t-set="line_count" t-value="line_count + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div>
+                            <div style="float:left;">
+                                <p>Responsable des immobilisations</p>
+                            </div>
+                            <div style="float:right;">
+                                <p>Occupant</p>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div>
+                            <p>Tout déplacement d'un bien doit faire l'objet d'une autorisation avec décharge signée
+                                par le responsable des moyens généraux
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </t>
+    </template>
+    <!--    <record id="student_report_profile" model="ir.actions.report">-->
+    <!--        <field name="name">Student rapport</field>-->
+    <!--        <field name="model">university.student</field>-->
+    <!--        <field name="report_type">qweb-pdf</field>-->
+    <!--        <field name="report_name">university.report_student</field>-->
+    <!--        <field name="report_file">university.report_student</field>-->
+    <!--        <field name="print_report_name">Rapport etudiant</field>-->
+    <!--     </record>-->
+    <report
+            string="Listes des investissements"
+            id="action_report_bom_structure"
+            model="invest.endroit"
+            name="invest.report_lieu"
+            file="invest.lieu_report"
+            report_type="qweb-html"
+    />
+</odoo>

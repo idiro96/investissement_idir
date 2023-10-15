@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_category">
+            <field name="name">Product Category</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//form//sheet//group//field[@name='parent_id']" position="after">
+                    <field name="categ_asset" string="Famille investissement" class="oe_inline"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

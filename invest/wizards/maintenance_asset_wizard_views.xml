@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="maintenance_asset_liste">
+            <field name="name">Maintenance Asset list</field>
+            <field name="model">maintenance.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date_operation"/>
+                        <field name="service_fait"/>
+                        <field name="montant"/>
+                        <field name="personnel_id"/>
+                        <field name="type_operation_id"/>
+                        <field name="piece_comptable"/>
+                    </group>
+                    <footer>
+                        <button name="button_maintenance" string="Affecter" type="object"
+                                class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

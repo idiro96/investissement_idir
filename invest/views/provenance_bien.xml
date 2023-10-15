@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="provenance_bien_list">
+            <field name="name">Provenance Bien</field>
+            <field name="model">invest.provenance.bien.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="provenance_bien" string="Provenance Bien"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="provenance_bien_form">
+            <field name="name">Provenance Bien form</field>
+            <field name="model">invest.provenance.bien.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Code"/>
+                            <field name="provenance_bien" string="Provenance Bien" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="provenance_bien_action_window">
+            <field name="name">Provenance Bien</field>
+            <field name="res_model">invest.provenance.bien.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Provenance Bien" id="invistissement_provenance_bien1" parent="invistissement_reference" sequence="8"/>
+        <menuitem name="Provenance Bien" id="invistissement_provenance_bien" parent="invistissement_provenance_bien1"
+                  action="provenance_bien_action_window" sequence="8"/>
+
+
+    </data>
+</odoo>

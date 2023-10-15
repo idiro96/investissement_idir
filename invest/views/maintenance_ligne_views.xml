@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="maintenance_ligne_list">
+      <field name="name">maintenance_ligne list</field>
+      <field name="model">invest.maintenance.ligne</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="type_operation_id"/>
+          <field name="personnel_id"/>
+          <field name="date_operation"/>
+          <field name="montant"/>
+          <field name="piece_comptable"/>
+        </tree>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="maintenance_ligne_form">
+      <field name="name">maintenance_ligne form</field>
+      <field name="model">invest.maintenance.ligne</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+          <field name="type_operation_id"/>
+          <field name="personnel_id"/>
+          <field name="date_operation"/>
+          <field name="montant"/>
+          <field name="piece_comptable"/>
+          </group>
+           </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="maintenance_ligne_action_window">
+      <field name="name">maintenance_ligne window</field>
+      <field name="res_model">invest.maintenance.ligne</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="university.action_server">
+      <field name="name">university server</field>
+      <field name="model_id" ref="model_university_university"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+<!--    <menuitem name="invistissement" id="invistissement.menu_root"/>-->
+
+    <!-- menu categories -->
+<!--<menuitem name="Gestion des immobilisations" id="invistissement_gestion1" parent="invistissement.menu_root"-->
+<!--                  />-->
+<!--&lt;!&ndash;    <menuitem name="maintenance_ligne" id="account.menu_finance_entries_management" parent="invistissement_gestion" action="maintenance_ligne_action_window"/>&ndash;&gt;-->
+<!--      <menuitem name="Immobilisations" id="investissement_immobilisations" parent="invistissement_gestion1" action="account_asset.action_account_asset_asset_form"/>-->
+<!--      <menuitem name="Types immobilisations" id="investissement_type_immobilisation" parent="invistissement_gestion1" action="account_asset.action_account_asset_asset_list_normal_purchase"/>-->
+
+
+
+    <!-- actions -->
+
+<!--    <menuitem name="List des region" id="invistissement_region_list" parent="invistissement.region"-->
+<!--              action="region_action_window"/>-->
+
+
+  </data>
+</odoo>

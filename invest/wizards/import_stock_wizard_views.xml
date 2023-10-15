@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="import_investissement_stock">
+            <field name="name">Import Stock</field>
+            <field name="model">import.stock</field>
+            <field name="arch" type="xml">
+                <form>
+                      <group>
+                      </group>
+                    <footer>
+<!--                        <button name="print_investissement_report" string="Imprimer" type="object" class="btn-danger text-uppercase"/>-->
+<!--                        <button string="Cancel" class="btn-default" special="cancel"/>-->
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_stock_wizard" model="ir.actions.act_window">
+            <field name="name">Import Stock</field>
+            <field name="res_model">import.stock</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           <field name="view_id" ref="import_investissement_stock"/>
+           <field name="target">new</field>
+     </record>
+
+    </data>
+
+</odoo>
+

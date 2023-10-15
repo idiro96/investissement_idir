@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="repertoire_investissement_list">
+            <field name="name"> Asset list</field>
+            <field name="model">reporting.investissement</field>
+            <field name="arch" type="xml">
+                <form>
+                      <group>
+                          <field name="report_typ"/>
+                          <field name="category_id" options="{'no_create_edit': True,'no_create': True,'no_open': True}" attrs="{'invisible':['|',('report_typ', '=', 'repertoire_fv'),('report_typ', '=', 'sortie_fb')]}"/>
+                          <field name="structure_id" options="{'no_create_edit': True,'no_create': True,'no_open': True}" attrs="{'invisible':['|',('report_typ', '=', 'sortie'),('report_typ', '=', 'sortie_fb')]}"/>
+                          <field name="etat_asset_id" options="{'no_create_edit': True,'no_create': True,'no_open': True}" attrs="{'invisible':['|',('report_typ', '=', 'repertoire'),'|',('report_typ', '=', 'detaille'),'|',('report_typ', '=', 'repertoire_fv'),('report_typ', '=', 'reforme')]}"/>
+                           <field name="date_du"  attrs="{'invisible':[('report_typ', '=', 'repertoire')],'required':['|',('report_typ', '=', 'detaille'),'|',('report_typ', '=', 'sortie'),('report_typ', '=', 'sortie_fb')]}"/>
+                          <field name="date_au"/>
+                      </group>
+
+                    <footer>
+                        <button name="print_investissement_report" string="Imprimer" type="object" class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_account_asset_wizard" model="ir.actions.act_window">
+            <field name="name">Account asset</field>
+            <field name="res_model">reporting.investissement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+           <field name="view_id" ref="repertoire_investissement_list"/>
+           <field name="target">new</field>
+     </record>
+
+
+    <menuitem name="Reporting" id="invistissement_rapport1" parent="invest.menu_root"/>
+    <menuitem name="Repertoire des investissements" id="repertoire_investissementss" parent="invistissement_rapport1"
+              action="action_account_asset_wizard"/>
+
+    </data>
+
+
+
+
+</odoo>
+

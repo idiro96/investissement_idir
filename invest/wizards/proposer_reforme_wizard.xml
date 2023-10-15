@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="proposer_reforme_asset">
+            <field name="name">Proposer Reforme</field>
+            <field name="model">proposer.reforme.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date_propser" required="1" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        <field name="motif_propostion" required="1" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        <field name="mise_attente" required="1" string="Emplacement Mise Attente" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="button_proposer_reforme" string="Proposer Reforme" type="object" class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="proposer_reforme_asset_action" model="ir.actions.act_window">
+            <field name="name">Proposer Reforme</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">proposer.reforme.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invest.proposer_reforme_asset"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_account_asset_asset"/>
+
+        </record>
+    </data>
+
+
+</odoo>
+

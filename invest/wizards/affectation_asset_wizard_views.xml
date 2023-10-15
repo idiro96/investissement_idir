@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="affectation_asset_list">
+            <field name="name">Affectation Asset list</field>
+            <field name="model">affectation.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date_affectation" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}" required="True" attrs="{'readonly': [('cheak_stat', '=', 'draft')]}"/>
+                        <field name="employee_id" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        <field name="structure_wizard_id" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}" attrs="{'readonly': [('employee_id', '!=', False)]}" required="True"/>
+                        <field name="lieu_id" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        <field name="cheak_stat" invisible='1'/>
+                    </group>
+                    <footer>
+                        <button name="button_affectation" string="Affecter" type="object" class="btn-danger text-uppercase"/>
+                        <button special="cancel" class="btn-default" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="sortie_asset_affectation" model="ir.actions.act_window">
+            <field name="name">Affectation Asset</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">affectation.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invest.action_account_asset_wizard"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_account_asset_asset"/>
+        </record>
+
+    </data>
+
+
+</odoo>
+

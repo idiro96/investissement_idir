@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="sortie_asset_list">
+            <field name="name">Sortie Asset list</field>
+            <field name="model">sortie.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="etat_asset_id" required="1" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                        <field name="date_sorti" required="1" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="button_sortie" string="Valider" type="object" class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="sortie_asset_action" model="ir.actions.act_window">
+            <field name="name">Réforme Investissement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sortie.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="sequence">10</field>
+            <field name="view_id" ref="invest.sortie_asset_list"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_invest_proposer_reforme_asset"/>
+        </record>
+    </data>
+
+
+
+</odoo>
+

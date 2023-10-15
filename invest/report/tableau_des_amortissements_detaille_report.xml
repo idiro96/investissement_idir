@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="tableau_des_amortissements_detaille">
+            <div class="page">
+            </div>
+            <t t-call="web.basic_layout">
+                <div class="row">
+                    <div style="float:right;font-size : 20px;">
+                        <p>
+                            Imprimé le :
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <h2 style="padding:7px;">TABLEAU DES AMORTISSEMENTS DETAILLE</h2>
+                    <P style="font-size : 20px;">
+<!--                        <strong>ACQUIS DU</strong>-->
+<!--                        <span t-esc="date_du"/>-->
+                        <strong>AU</strong>.
+                        <span t-esc="date_au"/>
+                    </P>
+                </div>
+                <br/>
+                <div style="float:left;font-size:20px;">
+                    <p>
+                        Code unité :
+                        <span t-esc="company_id"/>
+
+                    </p>
+                    <p>
+                        Libellé Unité : CETIC-INFORMATIQUE
+<!--                        <span t-esc="company_name"/>-->
+                    </p>
+                </div>
+                <table class="table text-center" style="width: 100%;">
+                    <thead class="text-center">
+                        <tr>
+                            <tr>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">N°
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">Compte
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">
+                                    Code
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">Designation
+
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">Code Barre
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">Date Acq
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">Val.Acquis
+                                    <br/>
+                                    (valeur En DA)
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    colspan="4">Amortissements
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"
+                                    rowspan="2">VNC
+                                </th>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <strong>Taux</strong>
+                                    <br/>
+                                    <strong>(%)</strong>
+                                </td>
+                                <td class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <strong>Amort.Ant</strong>
+                                </td>
+                                <td class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <strong>Dot.Exer</strong>
+                                </td>
+                                <td class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <strong>Amort.Cum</strong>
+                                </td>
+                            </tr>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-set="somme_value_total" t-value="0"/>
+                        <t t-set="somme_vnc_total" t-value="0"/>
+                        <t t-set="somme_amount_total" t-value="0"/>
+                        <t t-set="somme_anticidant_total" t-value="0"/>
+                        <t t-set="somme_depreciated_total" t-value="0"/>
+                        <t t-set="line_count" t-value="1"/>
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-set="somme_value" t-value="0"/>
+                            <t t-set="somme_vnc" t-value="0"/>
+                            <t t-set="somme_amount" t-value="0"/>
+                            <t t-set="somme_anticidant" t-value="0"/>
+                            <t t-set="somme_depreciated" t-value="0"/>
+                            <t t-set="depreciated_line_value" t-value="0"/>
+                            <t t-foreach="doc" t-as="record">
+
+                                <t t-set="line_count_line" t-value="0"/>
+
+<!--                                <t t-foreach="record.depreciation_line_ids.filtered(lambda r: datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').year == datetime.datetime.now().year and datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').month &lt;= datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-%m'))"-->
+<!--                                   t-as="line">-->
+<!--                                <t t-foreach="record.depreciation_line_ids.filtered(lambda r: datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').year == datetime.datetime.now().year)"-->
+<!--                                    t-as="line">-->
+<!--                                <t t-foreach="record.depreciation_line_ids.filtered(lambda r: (datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') &gt;= datetime.datetime.strptime(date_du, '%Y-%m-%d').strftime('%Y-%m')) and (datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') &lt;= datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-%m')))"-->
+<!--                                   t-as="line">-->
+<!--                                    <t t-set="line_count_line" t-value="line_count_line + line.amount "/>-->
+<!--                                </t>-->
+
+<!--                                test dotation-->
+                                <t t-foreach="record.depreciation_line_ids.filtered(lambda r: (datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') &gt;= datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-01')) and (datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') &lt;= datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-%m')))"
+                                   t-as="line">
+                                    <t t-set="line_count_line" t-value="line_count_line + line.amount "/>
+                                </t>
+
+<!--                                -->
+
+                                <t t-set="somme_amount" t-value="somme_amount + line_count_line"/>
+                                <t t-if="record.depreciation_line_ids">
+                                    <t t-set="depreciation_date_last_line"
+                                       t-value="record.depreciation_line_ids[-1]"/>
+                                </t>
+                            <t t-if="depreciation_date_last_line">
+                                <t t-if="depreciation_date_last_line.depreciation_date &gt; date_du">
+                                    <t t-if="depreciation_date_last_line.depreciation_date &gt;= date_au">
+                                        <t t-foreach="record.depreciation_line_ids.filtered(lambda r: datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') == datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-%m'))"
+                                           t-as="line">
+                                            <t t-set="depreciated_line_value" t-value="line.depreciated_value"/>
+                                            <t t-set="somme_depreciated"
+                                               t-value="somme_depreciated + line.depreciated_value "/>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-set="depreciated_line_value"
+                                           t-value="depreciation_date_last_line.depreciated_value"/>
+                                        <t t-set="somme_depreciated"
+                                           t-value="somme_depreciated + depreciation_date_last_line.depreciated_value "/>
+                                    </t>
+
+                                </t>
+                                <t t-else="">
+                                    <t t-set="depreciated_line_value"
+                                       t-value="depreciation_date_last_line.depreciated_value"/>
+                                    <t t-set="somme_depreciated"
+                                       t-value="somme_depreciated + depreciation_date_last_line.depreciated_value "/>
+                                </t>
+                                </t>
+
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <t t-esc="line_count"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.code"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.ancien_code"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.name"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.numero_inventaire"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.date_aquisition"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.value"/>
+                                        <t t-set="somme_value" t-value="somme_value + record.value"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="record.category_id.method_progress_factor"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="'%.2f'%(depreciated_line_value - line_count_line) if (depreciated_line_value - line_count_line) >=0 else '%.2f'%(- (depreciated_line_value - line_count_line)) "/>
+                                        <t t-set="somme_anticidant"
+                                           t-value="somme_anticidant + (depreciated_line_value - line_count_line)"/>
+                                    </td>
+
+
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="'%.2f'%(line_count_line)"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <span t-esc="'%.2f'%(depreciated_line_value)"/>
+                                    </td>
+                                    <td style="font-size:18px;text-align:center;border: 1px solid black;">
+                                        <t t-if="depreciation_date_last_line">
+                                        <t t-if="depreciation_date_last_line.depreciation_date &gt;= date_au">
+                                            <t t-set="test" t-value="0"/>
+                                            <t t-foreach="record.depreciation_line_ids.filtered(lambda r: datetime.datetime.strptime(r.depreciation_date, '%Y-%m-%d').strftime('%Y-%m') == datetime.datetime.strptime(date_au, '%Y-%m-%d').strftime('%Y-%m'))"
+                                               t-as="line">
+                                                <span t-esc="'%.2f'%(line.remaining_value)"/>
+                                                <t t-set="somme_vnc" t-value="somme_vnc + line.remaining_value "/>
+                                                <t t-set="test" t-value="1"/>
+                                            </t>
+                                            <t t-if=" test == 0 ">
+                                                <span t-esc="record.value"/>
+                                                <t t-set="somme_vnc" t-value="somme_vnc + record.value "/>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            0.00
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-esc="record.value"/>
+                                        <t t-set="somme_vnc" t-value="record.value "/>
+                                    </t>
+
+                                    </td>
+                                </tr>
+                                <t t-set="line_count" t-value="line_count + 1"/>
+                            </t>
+
+                            <t t-set="somme_value_total" t-value="somme_value_total + somme_value"/>
+                            <t t-set="somme_vnc_total" t-value="somme_vnc_total + somme_vnc"/>
+                            <t t-set="somme_amount_total" t-value="somme_amount_total + somme_amount"/>
+                            <t t-set="somme_anticidant_total" t-value="somme_anticidant_total + somme_anticidant"/>
+                            <t t-set="somme_depreciated_total" t-value="somme_depreciated_total + somme_depreciated"/>
+
+
+                            <tr>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="doc[0].code"/>
+                                </th>
+                                <th colspan="4" class="text-center"
+                                    style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="doc[0].category_id.name"/>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"></th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="'%.2f'%(somme_value)"/>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;"></th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="'%.2f'%(somme_anticidant) if somme_anticidant >=0 else '%.2f'%(- somme_anticidant)"/>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="'%.2f'%(somme_amount)"/>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="'%.2f'%(somme_depreciated)"/>
+                                </th>
+                                <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                    <span t-esc="'%.2f'%(somme_vnc)"/>
+                                </th>
+                            </tr>
+                        </t>
+                        <tr>
+                            <th colspan="5" class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <strong>TOTAL</strong>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;"></th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <span t-esc="'%.2f'%(somme_value_total)"/>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;"></th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <span t-esc="'%.2f'%(somme_anticidant_total) if somme_anticidant_total >=0 else '%.2f'%( - somme_anticidant_total)"/>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <span t-esc="'%.2f'%(somme_amount_total)"/>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <span t-esc="'%.2f'%(somme_depreciated_total)"/>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black;vertical-align:middle;">
+                                <span t-esc="'%.2f'%(somme_vnc_total)"/>
+                            </th>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <br></br>
+
+            </t>
+        </template>
+
+        <report
+                id="action_tableau_des_amortissements_detaille_report"
+                model="account.asset.asset"
+                string="tableau des amortissements detaille"
+                report_type="qweb-html"
+                name="invest.tableau_des_amortissements_detaille"
+                file="invest.tableau_des_amortissements_detaille_report"
+        />
+        <record id="action_tableau_des_amortissements_detaille_report" model="ir.actions.report">
+            <field name="paperformat_id" ref="invest.report_investissementss"/>
+        </record>
+
+    </data>
+</odoo>

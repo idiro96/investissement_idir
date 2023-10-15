@@ -1,0 +1,318 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_list">
+            <field name="name">Account inherit</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='name']" position="before">
+                    <field name="code"></field>
+                </xpath>
+                <xpath expr="//tree//field[@name='date']" position="replace">
+                    <field name="date_aquisition"></field>
+                </xpath>
+
+                <xpath expr="//tree//field[@name='code']" position="after">
+                    <field name="ancien_code" attrs="{'invisible': [('state', '=', 'reforme')]}"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='ancien_code']" position="after">
+                    <field name="numero_inventaire"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='name']" position="after">
+                    <field name="numero_serie" attrs="{'invisible': [('state', '=', 'reforme')]}"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='state']" position="before">
+                    <field name="etat_asset_id" string="Sortie"/>
+                </xpath>
+                 <xpath expr="//tree//field[@name='etat_asset_id']" position="after">
+                    <field name="date_sorti" string="Date Sortie"/>
+                </xpath>
+                <xpath expr="//tree//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//tree//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//tree//field[@name='partner_id']" position="after">
+                    <field name="personnel_id" attrs="{'invisible': [('state', '=', 'reforme')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_form">
+            <field name="name">Account inherit</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet//group//group//field[@name='value']" position="after">
+                    <field name="tva" string="Tva" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='tva']" position="after">
+                    <field name="ttc" string="Ttc" attrs="{'readonly':[('state', '=', 'close')]}"/>
+                    <field name="numero_serie" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date']" position="after">
+                    <field name="barcode_image" widget="image" readonly="1" style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;'/>
+                </xpath>
+
+                <xpath expr="//button[@name='validate']" position="after">
+                    <button name="affectaion_asset" string="Reaffectation" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('id', '=', False),'|',('state', '=', 'draft'),('etat_asset_id', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//button[@name='affectaion_asset']" position="after">
+                    <button name="maintenance_asset" string="Maintenance" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('id', '=', False),'|',('state', '=', 'draft'),('etat_asset_id', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//button[@name='set_to_draft']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='compute_depreciation_board']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='set_to_close']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(account_asset.action_asset_modify)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='maintenance_asset']" position="after">
+                    <button name="duplication_asset" string="Duplication" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('id', '=', False),('etat_asset_id', '!=', False)]}"/>
+                </xpath>
+<!--                <xpath expr="//button[@name='duplication_asset']" position="after">-->
+<!--                    <button name="testidir3" string="Code Barre" type="object" class="oe_highlight"/>-->
+<!--                </xpath>-->
+                <!--                <xpath expr="//button[@name='duplication_asset']" position="after">-->
+                <!--                    <button name="import_from_stock" string="Import From Stock" type="object" class="oe_highlight"-->
+                <!--                            attrs="{'invisible': ['|',('id', '!=', False),('etat_asset_id', '!=', False)]}"/>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//form//sheet//div[2]" position="before">
+                    <group>
+                        <group>
+                            <field name="cheak_wizard" string="Importer depuis Stock"
+                                   attrs="{'readonly':[('state', '=', 'close')]}" invisible="1"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//form//sheet//div[2]" position="before">
+                    <group>
+                        <field name="type_entrer" string="Type Entrée" widget="radio"
+                               options="{'horizontal': true}" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="demande_achat" string="Demande Achat" attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="date_demande_achat" string="Date Demande Achat" attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))],
+                                                                                                 'required': [('type_entrer', '=', 'acquisition')], 'readonly':[('state', '=', 'close')],'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="partner_id" string="Fournisseur" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="invoice_id" string="Facture" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="provenance_bien" string="Provenance Bien" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock', 'acquisition', False))],
+                                                                                           'required': [('type_entrer', '=', 'transfert_externe')], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="product_id" string="Article" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_externe', 'acquisition', False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                        </group>
+
+                        <group>
+                            <field name="structure_id_achat" string="Structure Achat" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="demandeur_achat" string="Demandeur Achat" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="num_bon_commande" string="Numéro Bon Commande"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="piece_entrer" string="Piece Entrée"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="date_piece_entrer" string="Date Piece Entrer"
+                                   attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock','transfert_externe',False))], 'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="date_transfert" string="Date Transfert" attrs="{'invisible': [('type_entrer', 'in', ('transfert_depuis_stock', 'acquisition', False))],
+                                                                                         'required': [('type_entrer', '=', 'transfert_externe')], 'readonly':[('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <!--                <xpath expr="//button[@name='validate']" position="after">-->
+                <!--                    <div class="oe_button_box" name="button_box">-->
+                <!--                        <button name="toggle_active" type="object"-->
+                <!--                                class="oe_stat_button" icon="fa-archive">-->
+                <!--                            <field name="cheak_wizard" widget="boolean_button"-->
+                <!--                                   options='{"terminology": "archive"}'/>-->
+                <!--                        </button>-->
+                <!--                    </div>-->
+                <!--                </xpath>-->
+                <xpath expr="//form//sheet//group//group//field[@name='value_residual']" position="after">
+                    <field name="personnel_id" string="Personnel" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group[2]//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group[2]//field[@name='invoice_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='code']" position="after">
+                    <field name="date_aquisition" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                           string="Date Aquisition"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date_aquisition']" position="after">
+                    <field name="date_reintegration" attrs="{'invisible': ['|',('state','=', 'close'),('state','=', 'draft')],'readonly':[('state', '!=', 'draft')]}"
+                           string="Date Reintegration"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date_reintegration']" position="after">
+                    <field name="motif_reintegration" attrs="{'invisible': ['|',('state','=', 'close'),('state','=', 'draft')],'readonly':[('state', '!=', 'draft')]}"
+                           string="Motif Reintegration"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date']" position="after">
+                    <field name="date_sorti" string="Sortie le "
+                           attrs="{'invisible': ['|',('id', '=', False),('etat_asset_id','=', False),('state','!=', 'close')],'readonly':['|',('cheak_wizard', '!=', False),('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date_sorti']" position="after">
+                    <field name="etat_asset_id" string="Motif sortie"
+                           attrs="{'invisible': ['|',('id', '=', False),('state', '!=', 'close')],'required': [('date_sorti', '!=', False)],'readonly': ['|',('date_sorti', '=', False),('state', '!=', 'draft')]}"
+                           options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='etat_asset_id']" position="after">
+                    <field name="date_propser" string="Date Proposer Réforme"
+                           attrs="{'invisible': [('state', '!=', 'open')],'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='code']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//div[@class='oe_title']" position="before">
+                    <group>
+                        <group>
+                            <field name="category_id" string="Catégorie" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}"
+                                   attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="code" string="Référence" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <field name="dictonnaire_id" string="Dictonnaire" options="{'no_create_edit': True,'no_quick_create': True,'no_create': True,'no_open': True}" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                        </group>
+
+                    </group>
+
+                </xpath>
+<!--                <xpath expr="//form//sheet//field[@name='category_id']" position="after">-->
+<!--                    <field name="dictonnaire_id" string="Dictonnaire" attrs="{'readonly':[('state', '!=', 'draft')]}"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//form//sheet//group//group//field[@name='type']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('state', '!=', 'draft'),('cheak_wizard', '!=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//form//sheet//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('cheak_wizard', '!=', False),('state', '!=',
+                        'draft')],'required': [('cheak_wizard','=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='date']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')],'required': [('cheak_wizard', '=',
+                        False)]}
+                    </attribute>
+                    <attribute name="string">Mise en service</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='value']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('state', '!=', 'draft'),('cheak_wizard', '!=',
+                        False)],'required': [('cheak_wizard', '=', False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//form//sheet//group//group//field[@name='provenance_bien']" position="after">
+                    <field name="vnc" string="VNC"
+                           attrs="{'invisible': ['|',('type_entrer', '=', 'transfert_depuis_stock'),'|',('type_entrer', '=', 'acquisition'),'|',('type_entrer', '=', False)], 'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+
+                <xpath expr="//form//sheet//notebook//page//field//tree" position="attributes">
+                    <attribute name="delete">0</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='personnel_id']" position="after">
+                    <field name="endroit_id_1" string="Lieu" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='personnel_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='endroit_id_1']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//form//sheet//notebook" position="inside">
+                    <page string="Historique Affectation">
+                        <tree>
+                            <field name="affectation_ligne_ids">
+                                <tree>
+                                    <field name="endroit_id"/>
+                                    <field name="employee_id"/>
+                                    <field name="date_affectation"/>
+                                    <field name="fin_affectation"/>
+                                </tree>
+
+                            </field>
+                        </tree>
+                    </page>
+                </xpath>
+                <xpath expr="//form//sheet//notebook" position="inside">
+                    <page string="Historique Maintenance">
+                        <field name="maintenance_ligne_ids"/>
+                    </page>
+                </xpath>
+                <xpath expr="//form//sheet//notebook" position="inside">
+                    <page string="Ammortissement Annuel">
+                        <field name="depreciation_ligne2_ids">
+
+                            <tree>
+                                <field name="depreciation_date"/>
+                                <field name="depreciated_value"/>
+                                <field name="amount"/>
+                                <field name="remaining_value"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+                <xpath expr="//form//sheet//notebook" position="inside">
+                    <page string="Ammortissement Annuel2">
+                        <field name="depreciation_ligne3_ids">
+
+                            <tree>
+                                <field name="depreciation_date"/>
+                                <field name="depreciated_value"/>
+                                <field name="amount"/>
+                                <field name="remaining_value"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+            </field>
+
+        </record>
+        <record model="ir.actions.act_window" id="action_account_asset_asset_form_reform">
+            <field name="name">Assets</field>
+            <field name="res_model">account.asset.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+            <field name="domain">[('state', '!=', 'reforme'),('state', '!=', 'close')]</field>
+
+
+        </record>
+
+        <menuitem name="Gestion" id="invistissement_gestion1" parent="invest.menu_root"/>
+        <menuitem name="Immobilisations" id="investissement_immobilisations" parent="invistissement_gestion1"
+                  action="action_account_asset_asset_form_reform" sequence="1"/>
+        <menuitem name="Types immobilisations" id="investissement_type_immobilisation" parent="invistissement_gestion1"
+                  action="account_asset.action_account_asset_asset_list_normal_purchase" sequence="2"/>
+
+
+    </data>
+
+</odoo>

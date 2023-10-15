@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="repertoire_investissements">
+        <t t-call="web.basic_layout">
+            <div class="page">
+            </div>
+            <div class="row">
+                <div style="float:right;font-size : 20px;">
+                    <p>
+                        Imprimé le :
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <h2 style="padding:7px;">REPERTOIRE DES INVESTISSEMENTS</h2>
+                <P style="font-size : 20px;">
+                    Au
+                    <span t-esc="date_au"/>
+                </P>
+            </div>
+            <br/>
+            <div style="float:left;font-size:20px;">
+                <p>
+                    Code unité :
+                    <span t-esc="1"/>
+
+                </p>
+                <p>
+                    Libellé unité : CETIC-INFORMATIQUE
+<!--                    <span t-esc="Cetic"/>-->
+                </p>
+            </div>
+            <br/>
+            <br/>
+            <div class="row" style="margin:30;">
+                <table border="1" class="table table-bordered"
+                       style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>N°</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Ancien Code</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Désignation</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Taux</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Numero Inventaire</strong>
+                            </th>
+<!--                            <th style="text-align:center;font-size:18px;">-->
+<!--                                <strong>N°Série</strong>-->
+<!--                            </th>-->
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Cpt Comptable</strong>
+                            </th>
+<!--                            <th style="text-align:center;font-size:18px;">-->
+<!--                                <strong>Centre affect</strong>-->
+<!--                            </th>-->
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Valeurs acquisition</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>VNC</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="somme_value_total" t-value="0"/>
+                        <t t-set="somme_vnc_total" t-value="0"/>
+                        <t t-set="line_count" t-value="1"/>
+                        <t t-foreach="docs" t-as="record">
+                            <tr>
+                                <td>
+                                    <t t-esc="line_count"/>
+                                </td>
+
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.ancien_code"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.name"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.category_id.method_progress_factor"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.numero_inventaire"/>
+                                </td>
+<!--                                <td style="font-size:18px;text-align:center;">-->
+<!--                                    <span t-esc="record.numero_serie"/>-->
+<!--                                </td>-->
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.code"/>
+                                </td>
+<!--                                <td style="font-size:18px;text-align:center;">-->
+<!--                                    <span t-esc="record.structure_id.name"/>-->
+<!--                                </td>-->
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.value"/>
+                                    <t t-set="somme_value_total"
+                                       t-value="somme_value_total + record.value "/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <t t-if="record.depreciation_line_ids">
+                                        <t t-set="depreciation_date_last_line"
+                                           t-value="record.depreciation_line_ids[-1]"/>
+                                    </t>
+                                    <t t-if="depreciation_date_last_line">
+                                        <t t-if="depreciation_date_last_line.depreciation_date &gt;= date_au">
+                                            <t t-set="test" t-value="0"/>
+                                            <t t-foreach="record.depreciation_line_ids.filtered(lambda r: r.depreciation_date == date_au)"
+                                               t-as="line">
+                                                <span t-esc="'%.2f'%(line.remaining_value)"/>
+                                                <t t-set="somme_vnc_total"
+                                                   t-value="somme_vnc_total + line.remaining_value"/>
+                                                <t t-set="test" t-value="1"/>
+                                            </t>
+                                            <t t-if=" test == 0 ">
+                                                <span t-esc="record.value"/>
+                                                <t t-set="somme_vnc_total" t-value="somme_vnc_total + record.value "/>
+                                            </t>
+
+                                        </t>
+                                        <t t-else="">
+                                            0.00
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        0.00
+                                    </t>
+                                </td>
+                            </tr>
+                            <t t-set="line_count" t-value="line_count + 1"/>
+                        </t>
+                        <tr>
+                            <td colspan="6" style="text-align:center;font-size:18px;">
+                                <strong>TOTAL</strong>
+                            </td>
+                            <td style="text-align:center;font-size:18px;">
+                                <span t-esc="'%.2f'%(somme_value_total)"/>
+                            </td>
+                            <td style="text-align:center;font-size:18px;">
+                                <span t-esc="'%.2f'%(somme_vnc_total)"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <report
+            string="repertoire des investissements"
+            id="action_repertoire_investissements_report"
+            model="account.asset.asset"
+            name="invest.repertoire_investissements"
+            file="invest.repertoire_des_investissements_report"
+            report_type="qweb-html"
+    />
+    <record id="action_repertoire_investissements_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="invest.report_investissementss"/>
+    </record>
+
+
+</odoo>

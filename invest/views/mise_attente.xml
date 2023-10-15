@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="mise_attente_list">
+            <field name="name">Mise Attente</field>
+            <field name="model">invest.mise.attente.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="mise_attente1" string="Mise Attente"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mise_attente_form">
+            <field name="name">Mise Attente</field>
+            <field name="model">invest.mise.attente.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Code"/>
+                            <field name="mise_attente1" string="Mise Attente"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="mise_attente_action_window">
+            <field name="name">Mise Attente</field>
+            <field name="res_model">invest.mise.attente.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Emplacement de Mise en Attente" id="invistissement_mise_attente1" parent="invistissement_reference" sequence="9"/>
+        <menuitem name="Emplacement de Mise en Attente" id="invistissement_mise_attente2" parent="invistissement_mise_attente1"
+                  action="mise_attente_action_window" sequence="9"/>
+
+
+    </data>
+</odoo>

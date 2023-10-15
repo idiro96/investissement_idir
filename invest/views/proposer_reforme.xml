@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="proposer_reforme_list">
+            <field name="name">Proposer Reforme</field>
+            <field name="model">invest.proposer.reforme.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="num_inventaire" string="Numéro inventaire" readonly="True"/>
+                    <field name="name" string="Nom Imobilisation"/>
+                    <field name="date_aqui" string="Date Aquisition"/>
+                    <field name="value" string="Valeur Brute"/>
+                    <field name="date_propser" string="Date Propser Réforme"/>
+                    <field name="motif_propostion1" string="Motif Propostion"/>
+                    <field name="mise_attente1" string="Emplacement Attente"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="proposer_reforme_form">
+            <field name="name">Proposer Reforme form</field>
+            <field name="model">invest.proposer.reforme.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="num_inventaire" string="Numéro inventaire" readonly="1"/>
+                                <field name="name" string="Nom Imobilisation" readonly="1"/>
+                                <field name="date_aqui" string="Date Aquisition" readonly="1"/>
+                                <field name="value" string="Valeur Brute" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="date_propser" string="Date Propser Réforme" readonly="1"/>
+                                <field name="motif_propostion1" string="Motif Propostion" readonly="1"/>
+                                <field name="mise_attente1" string="Emplacement Attente" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="proposer_reforme_action_window">
+            <field name="name">Proposer Reforme </field>
+            <field name="res_model">invest.proposer.reforme.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Proposer Reforme" id="invistissement_proposer_reforme" parent="invistissement_gestion1"
+                  action="proposer_reforme_action_window" sequence="7"/>
+
+
+    </data>
+</odoo>

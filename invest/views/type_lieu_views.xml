@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="type_lieu_list">
+            <field name="name">Lieu list</field>
+            <field name="model">invest.type.lieu</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="intitule" string="Intitule"/>
+                    <field name="parent_id" string="Parent_Id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="type_lieu_form">
+            <field name="name">Lieu form</field>
+            <field name="model">invest.type.lieu</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Compte"/>
+                            <field name="intitule" string="Intitule"/>
+                            <field name="parent_id" string="Parent_Id"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"></field>
+                        <field name="message_ids" widget="mail_thread"></field>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+
+        <record model="ir.actions.act_window" id="type_lieu_action_window">
+            <field name="name">Sites</field>
+            <field name="res_model">invest.type.lieu</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Type Lieu" id="invistissement_tyep_lieu" parent="invistissement_reference"
+                  sequence="6"/>
+        <menuitem name="Type Lieu" id="invistissement_tyep_lieu1" parent="invistissement_tyep_lieu"
+                  action="type_lieu_action_window" sequence="6"/>
+    </data>
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="motif_reintegration_list">
+            <field name="name">Motif Reintegration</field>
+            <field name="model">invest.reintegration.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="motif_reintegration" string="Motif Reintegration"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="motif_reintegration_form">
+            <field name="name">Motif Reintegration</field>
+            <field name="model">invest.reintegration.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Code"/>
+                            <field name="motif_reintegration" string="Motif Reintegration"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="motif_reintegration_action_window1">
+            <field name="name">Motif Reintegration</field>
+            <field name="res_model">invest.reintegration.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Motif Reintegration" id="invistissement_reintegration1" parent="invistissement_reference"
+                  sequence="11"/>
+
+        <menuitem name="Motif Reintegration" id="invistissement_reintegration" parent="invistissement_reintegration1"
+                  action="motif_reintegration_action_window1" sequence="6"/>
+
+
+    </data>
+</odoo>

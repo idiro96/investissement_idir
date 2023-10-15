@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="proposer_reforme_action_window3">
+            <field name="name">Proposer Reforme </field>
+            <field name="res_model">account.asset.asset</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'reforme')]</field>
+        </record>
+
+
+        <menuitem name="Proposer Reforme2" id="invistissement_proposer_reforme2" parent="invistissement_gestion1"
+                  action="proposer_reforme_action_window3"/>
+
+
+    </data>
+</odoo>

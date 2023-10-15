@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="repertoire_invest_reforme">
+        <t t-call="web.basic_layout">
+            <div class="page">
+            </div>
+            <div class="row">
+                <div style="float:right;font-size : 20px;">
+                    <p>
+                        Imprimé le :
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <h2 style="padding:7px;">REPERTOIRE DES INVESTISSEMENTS PROPOSER À LA RÉFORME</h2>
+                <P style="font-size : 20px;">
+                    <strong>ACQUIS DU</strong>
+                    <span t-esc="date_du"/>
+                    <strong>AU</strong>
+                    <span t-esc="date_au"/>
+                </P>
+            </div>
+            <br/>
+            <div style="float:left;font-size:20px;">
+                <p>
+                    Code unité :
+                    <span t-esc="company_id"/>
+
+                </p>
+                <p>
+                    Libellé unité :
+                    <span t-esc="company_name"/>
+                </p>
+            </div>
+            <br/>
+            <br/>
+            <div class="row" style="margin:30;">
+                <table border="1" class="table table-bordered"
+                       style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>N°</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Code Invest</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Désignation</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Date Acquisition</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Date Proposer</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Motif Proposition</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Emplacement Mise En Attente </strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Valeure acquisition</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="somme_value_total" t-value="0"/>
+                        <t t-set="line_count" t-value="1"/>
+                        <t t-foreach="docs" t-as="record">
+                            <tr>
+                                <td>
+                                    <t t-esc="line_count"/>
+                                </td>
+
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.numero_inventaire"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.name"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.date_aquisition"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.date_propser"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.motif_propostion2"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.mise_attente2"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.value"/>
+                                    <t t-set="somme_value_total"
+                                       t-value="somme_value_total + record.value "/>
+                                </td>
+                            </tr>
+                            <t t-set="line_count" t-value="line_count + 1"/>
+                        </t>
+                        <tr>
+                            <td colspan="7" style="text-align:center;font-size:18px;">
+                                <strong>TOTAL</strong>
+                            </td>
+                            <td style="text-align:center;font-size:18px;">
+                                <span t-esc="'%.2f'%(somme_value_total)"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <report
+            string="repertoire des investissements proposer à la reforme"
+            id="action_repertoire_invest_reforme"
+            model="account.asset.asset"
+            name="invest.repertoire_invest_reforme"
+            file="invest.repertoire_invest_proposer_reforme"
+            report_type="qweb-html"
+    />
+    <record id="action_repertoire_invest_reforme" model="ir.actions.report">
+        <field name="paperformat_id" ref="invest.report_investissementss"/>
+    </record>
+
+</odoo>

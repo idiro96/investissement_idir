@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="affectation_list">
+      <field name="name">affectation list</field>
+      <field name="model">invest.affectation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="asset_id"/>
+          <field name="employee_id"/>
+        </tree>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="affectation_form">
+      <field name="name">affectation form</field>
+      <field name="model">invest.affectation</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+          <field name="asset_id"/>
+          <field name="employee_id"/>
+          </group>
+           </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="affectation_action_window">
+      <field name="name">affectation window</field>
+      <field name="res_model">invest.affectation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="university.action_server">
+      <field name="name">university server</field>
+      <field name="model_id" ref="model_university_university"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+<!--    <menuitem name="invistissement" id="invistissement.menu_root"/>-->
+
+    <!-- menu categories -->
+
+    <menuitem name="Affectations" id="invistissement_affectation" parent="account.menu_finance_entries_management" action="affectation_action_window"/>
+
+
+    <!-- actions -->
+
+<!--    <menuitem name="List des region" id="invistissement_region_list" parent="invistissement.region"-->
+<!--              action="region_action_window"/>-->
+
+
+  </data>
+</odoo>

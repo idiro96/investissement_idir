@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <!--  explicit list view definition  -->
+        <record model="ir.ui.view" id="ammortissement_ligne_list">
+            <field name="name">Ammortissement</field>
+            <field name="model">ammortissement.ligne</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="type"/>
+                        <field name="nbr_annee"/>
+                    </group>
+                </form>
+                <tree>
+                    <field name="ammortissement_ligne_ids" attrs="{'invisible':[('type', '=', 'linear')]}">
+                        <tree editable="bottom">
+                            <field name="annee"/>
+                            <field name="taux"/>
+                        </tree>
+                    </field>
+                </tree>
+                <form>
+                    <footer>
+                        <button name="enregistrer" string="Enregistrer" type="object"
+                                class="btn-danger text-uppercase"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

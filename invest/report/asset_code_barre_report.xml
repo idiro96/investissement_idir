@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="asset_code_barre_report">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="record">
+                    <strong>CETIC-INFORMATIQUE</strong>
+
+                    <br/>
+                    <span>
+                        <t t-esc="record.name"/>
+                    </span>
+                    <br/>
+                    <img t-att-src="'data:image/png;base64,'+record.barcode_image.decode()"
+                         style="height:85px; width:220px"/>
+                </t>
+            </div>
+        </t>
+    </template>
+    <!--    <record id="student_report_profile" model="ir.actions.report">-->
+    <!--        <field name="name">Student rapport</field>-->
+    <!--        <field name="model">university.student</field>-->
+    <!--        <field name="report_type">qweb-pdf</field>-->
+    <!--        <field name="report_name">university.report_student</field>-->
+    <!--        <field name="report_file">university.report_student</field>-->
+    <!--        <field name="print_report_name">Rapport etudiant</field>-->
+    <!--     </record>-->
+    <record id="report_qweb_paperformat_bar_code" model="report.paperformat">
+        <field name="name">bar code</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">24</field>
+        <field name="page_width">48</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="True"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">120</field>
+    </record>
+    <report
+            string="Code à barre"
+            id="action_report_barcode"
+            model="account.asset.asset"
+            name="invest.asset_code_barre_report"
+            file="invest.asset_code_barre_report"
+            report_type="qweb-pdf"
+            paperformat="report_qweb_paperformat_bar_code"
+    />
+
+</odoo>

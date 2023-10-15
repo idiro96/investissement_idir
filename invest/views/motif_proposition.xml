@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="motif_propostion_list">
+            <field name="name">Motif Propostion</field>
+            <field name="model">invest.motif.propostion.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="motif_propostion1" string="Motif Propostion"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="motif_propostion_form">
+            <field name="name">Motif Propostion form</field>
+            <field name="model">invest.motif.propostion.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Code"/>
+                            <field name="motif_propostion1" string="Motif Propostion"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="motif_propostion_action_window">
+            <field name="name">Motif Propostion</field>
+            <field name="res_model">invest.motif.propostion.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Motif Reforme" id="invistissement_reforme" parent="invistissement_reference"
+                  sequence="10"/>
+
+        <menuitem name="Motif Reforme" id="invistissement_motif_propostion1" parent="invistissement_reforme"
+                  action="motif_propostion_action_window" sequence="5"/>
+
+
+    </data>
+</odoo>

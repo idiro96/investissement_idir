@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- TAGS FOR CASH FLOW STATEMENT -->
+
+        <record id="invistissement_type_lieu_region" model="invest.type.lieu">
+            <field name="code">region</field>
+            <field name="intitule">Region</field>
+        </record>
+        <record id="invistissement_type_lieu_site" model="invest.type.lieu">
+            <field name="code">site</field>
+            <field name="intitule">Site</field>
+            <field name="parent_id" ref="invistissement_type_lieu_region"/>
+        </record>
+
+        <record id="invistissement_type_lieu_batiment" model="invest.type.lieu">
+            <field name="code">batiment</field>
+            <field name="intitule">Batiment</field>
+            <field name="parent_id" ref="invistissement_type_lieu_site"/>
+        </record>
+        <record id="invistissement_type_lieu_bureau" model="invest.type.lieu">
+            <field name="code">bureau</field>
+            <field name="intitule">Bureau</field>
+            <field name="parent_id" ref="invistissement_type_lieu_batiment"/>
+        </record>
+    </data>
+</odoo>

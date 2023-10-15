@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="repertoire_invest_faible_valeur">
+        <t t-call="web.basic_layout">
+            <div class="page">
+            </div>
+            <div class="row">
+                <div style="float:right;font-size : 20px;">
+                    <p>
+                        Imprimé le :
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <h2 style="padding:7px;">REPERTOIRE DES INVESTISSEMENTS A FAIBLE VALEUR</h2>
+                <P style="font-size : 20px;">
+                    Au
+                    <span t-esc="date_au"/>
+                </P>
+            </div>
+            <br/>
+            <div style="float:left;font-size:20px;">
+                <p>
+                    Code unité :
+                    <span t-esc="company_id"/>
+
+                </p>
+                <p>
+                    Libellé Unité : CETIC-INFORMATIQUE
+<!--                    <span t-esc="company_name"/>-->
+                </p>
+            </div>
+            <br/>
+            <br/>
+            <div class="row" style="margin:30;">
+                <table border="1" class="table table-bordered"
+                       style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>N°</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Code Invest</strong>
+                            </th>
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Désignation</strong>
+                            </th>
+<!--                            <th style="text-align:center;font-size:18px;">-->
+<!--                                <strong>N°Série</strong>-->
+<!--                            </th>-->
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Date Acquisition</strong>
+                            </th>
+<!--                            <th style="text-align:center;font-size:18px;">-->
+<!--                                <strong>Centre affect</strong>-->
+<!--                            </th>-->
+                            <th style="text-align:center;font-size:18px;">
+                                <strong>Valeurs acquisition</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="somme_value_total" t-value="0"/>
+                        <t t-set="line_count" t-value="1"/>
+                        <t t-foreach="docs" t-as="record">
+                            <tr>
+                                <td>
+                                    <t t-esc="line_count"/>
+                                </td>
+
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.numero_inventaire"/>
+                                </td>
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.name"/>
+                                </td>
+<!--                                <td style="font-size:18px;text-align:center;">-->
+<!--                                    <span t-esc="record.numero_serie"/>-->
+<!--                                </td>-->
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.date_aquisition"/>
+                                </td>
+<!--                                <td style="font-size:18px;text-align:center;">-->
+<!--                                    <span t-esc="record.structure_id.name"/>-->
+<!--                                </td>-->
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-esc="record.value"/>
+                                    <t t-set="somme_value_total"
+                                       t-value="somme_value_total + record.value "/>
+                                </td>
+                            </tr>
+                            <t t-set="line_count" t-value="line_count + 1"/>
+                        </t>
+                        <tr>
+                            <td colspan="4" style="text-align:center;font-size:18px;">
+                                <strong>TOTAL</strong>
+                            </td>
+                            <td style="text-align:center;font-size:18px;">
+                                <span t-esc="'%.2f'%(somme_value_total)"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <report
+            string="repertoire des investissements à faible valeur"
+            id="action_repertoire_des_investissements_faible_valeur"
+            model="account.asset.asset"
+            name="invest.repertoire_invest_faible_valeur"
+            file="invest.repertoire_invest_faible_valeur_report.xml"
+            report_type="qweb-html"
+    />
+
+    <record id="action_repertoire_des_investissements_faible_valeur" model="ir.actions.report">
+        <field name="paperformat_id" ref="invest.report_investissementss"/>
+    </record>
+
+
+</odoo>

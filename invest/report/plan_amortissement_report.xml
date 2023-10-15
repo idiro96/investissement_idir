@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_amortissement">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="row">
+                    <div style="float:left;font-size : 20px;">
+                        <p>
+                            <strong>
+                                <span t-field="docs.company_id.name"/>
+                            </strong>
+                        </p>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div style="float:right;font-size : 20px;">
+                        <p>
+                            Edité le :
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <u>
+                        <h2 style="padding:7px;">PLAN D'AMORTISSEMENT</h2>
+                    </u>
+                </div>
+                <br/>
+                <div style="text-align:center;font-size:23px;text-align: justify;background-color:#E9E4E4;">
+                    <p>
+                        Compte Comptable :
+                        <span t-field="docs.code"/>
+                    </p>
+                    <p>
+                        Article
+                        <span t-field="docs.numero_inventaire"/>
+                        /
+                        <span t-field="docs.name"/>
+                    </p>
+                    <br/>
+                    <br/>
+                    <p>
+                        Mode d'amortissement :
+                        <span t-field="docs.category_id.method"/>
+                    </p>
+                    <p>
+                        valeur d'origine
+                        <span t-field="docs.value"/>
+                        Durée d'amortissement:
+                        <span t-field="docs.category_id.method_number"/>
+                        <t t-if="docs.category_id.method == 'degressive'">
+                            soit un taux de :
+                            <t t-foreach="docs.category_id.ammortissement_ligne2_ids" t-as="record">
+                                <span t-field="record.taux"/>
+                            </t>
+                        </t>
+                    </p>
+                    <p>
+                        Date d'acquisition / Mise en Service
+                        <span t-field="docs.date"/>
+                        Premiére annuité =
+                        <span t-foreach="docs.depreciation_line_ids[:1]" t-as="record">
+                            <span t-esc="'%.2f'%(record.amount)"/>
+                        </span>
+                    </p>
+                    <p>
+                        <t t-foreach="docs.depreciation_ligne2_ids.sorted(key=lambda r:r.depreciation_date,reverse=True)[:1]"
+                           t-as="record">
+                            <span t-esc="record.depreciation_date[:4]"/>
+                        </t>
+                        : Exercice de fin d'amortissment
+                    </p>
+                </div>
+                <br/>
+                <br/>
+            </div>
+            <div class="row" style="margin:30;">
+                <table border="1" class="table table-bordered"
+                       style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Année</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Anuitée</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Cummule amortissement</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Valeur Net Comptable (VNC)</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs.depreciation_line_ids" t-as="record">
+                            <tr>
+
+                                <td style="font-size:18px;text-align:center;">
+                                    <span t-field="record.depreciation_date"/>
+                                </td>
+                                <td style="font-size:18px;text-align:right;">
+                                    <span t-esc="'%.2f'%(record.depreciated_value)"/>
+                                </td>
+                                <td style="font-size:18px;text-align:right;">
+                                    <span t-esc="'%.2f'%(record.amount)"/>
+                                </td>
+                                <td style="font-size:18px;text-align:right;">
+                                    <span t-esc="'%.2f'%(record.remaining_value)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <report
+            string="Plan d'amortissement"
+            id="action_amortissement_report"
+            model="account.asset.asset"
+            name="invest.report_amortissement"
+            file="invest.plan_amortissement_report"
+            report_type="qweb-pdf"
+    />
+</odoo>

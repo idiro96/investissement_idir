@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="type_operation_list">
+      <field name="name">operation_type list</field>
+      <field name="model">invest.type.operation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="code" string="code"/>
+          <field name="intitule" string="Intitule"/>
+        </tree>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="type_operation_form">
+      <field name="name">type_operation form</field>
+      <field name="model">invest.type.operation</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+          <field name="code" string="Code"/>
+          <field name="intitule" string="Intitule"/>
+          </group>
+           </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="type_operation_action_window">
+      <field name="name">Type Operation</field>
+      <field name="res_model">invest.type.operation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="university.action_server">
+      <field name="name">university server</field>
+      <field name="model_id" ref="model_university_university"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+<!--    <menuitem name="invistissement" id="invistissement.menu_root"/>-->
+
+    <!-- menu categories -->
+
+    <menuitem name="Type Operation" id="invistissement_type_operation" parent="invistissement_reference" sequence="7"/>
+    <menuitem name="Type Operation" id="invistissement_type_operation1" parent="invistissement_type_operation" action="type_operation_action_window" sequence="7"/>
+
+
+    <!-- actions -->
+
+<!--    <menuitem name="List des region" id="invistissement_region_list" parent="invistissement.region"-->
+<!--              action="region_action_window"/>-->
+
+
+  </data>
+</odoo>

@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="etat_asset_list">
+            <field name="name">Etat Investissement</field>
+            <field name="model">invest.etat.asset</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Code"/>
+                    <field name="designation" string="Designation"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="etat_asset_form">
+            <field name="name">Etat Investissement form</field>
+            <field name="model">invest.etat.asset</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" string="Code"/>
+                            <field name="designation" string="Designation"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="etat_asset_action_window">
+            <field name="name">Etat Investissement</field>
+            <field name="res_model">invest.etat.asset</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Etat Investissement" id="invistissement_etat_asset1" parent="invistissement_gestion1"
+                  action="etat_asset_action_window" sequence="4"/>
+
+
+    </data>
+</odoo>

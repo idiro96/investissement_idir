@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_decharge">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="row">
+                    <div style="float:left;font-size : 20px;">
+                        <p>
+                            <strong>
+                                <span t-field="docs.company_id.name"/>
+                            </strong>
+                        </p>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div style="float:right;font-size : 20px;">
+                        <p>
+                            Edité le :
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </p>
+                    </div>
+                </div>
+                <div style="text-align:center;background-color:#E9E4E4;">
+                    <h2 style="padding:7px;">D E C H A R G E</h2>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div style="text-align:center;font-size:23px;text-align: justify;">
+                    <p>
+                        <t t-if="docs.personnel_id.gender == 'male'">je soussigné Mr &amp;nbsp;&amp;nbsp;</t>
+                        <t t-else=""> je soussignée Mme &amp;nbsp;&amp;nbsp;</t>
+                        <strong>
+                            <span t-field="docs.personnel_id.name"/>
+                            / &amp;nbsp;
+                            <span t-field="docs.personnel_id.job_id"/>&amp;nbsp;
+                        </strong>
+                        <br/>
+                        Avoir reçu les articles suivants pour une utilisation dans le cadre de mes fonctions au niveau
+                        du Centre des Techniques de l'information
+                        et de la communication E.P.E - SPA /
+                        <span t-field="docs.company_id.name"/>
+                    </p>
+                </div>
+                <br/>
+                <br/>
+            </div>
+            <div class="row" style="margin:30;">
+                <table border="1" class="table table-bordered"
+                       style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Date</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>N° d'inventaire</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>Désignation</strong>
+                            </th>
+                            <th style="text-align:center;background-color : #E9E4E4;font-size:18px;">
+                                <strong>N° de série</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td style="font-size:18px;">
+                                <span t-field="docs.affectation_id.date_affectation"/>
+                            </td>
+                            <td style="font-size:18px;">
+                                <span t-field="docs.numero_inventaire"/>
+                            </td>
+                            <td style="font-size:18px;">
+                                <span t-esc="docs.name"/>
+                            </td>
+                            <td style="font-size:18px;">
+                                <span t-esc="docs.numero_serie"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br/>
+            <br/>
+            <div class="row">
+                <div style="float:left;font-size:20px;">
+                    <p>
+                        <strong>Le bénéficiaire</strong>
+                    </p>
+                    <p>
+                        <strong>Nom et Prénom :</strong>
+                        <span t-field="docs.personnel_id.name"/>
+                    </p>
+                    <p>
+                        <strong>Fonction :</strong>
+                        <span t-field="docs.personnel_id.job_id"/>
+                    </p>
+
+                </div>
+                <div style="float:right;font-size:20px;">
+                    <p>
+                        <strong>P /
+                            <span t-field="docs.company_id.name"/>
+                        </strong>
+                    </p>
+                    <p>Le chargé des moyens généraux</p>
+                </div>
+
+            </div>
+
+
+        </t>
+    </template>
+    <report
+            string="Decharge"
+            id="action_decharge_report"
+            model="account.asset.asset"
+            name="invest.report_decharge"
+            file="invest.decharge_report"
+            report_type="qweb-html"
+    />
+</odoo>
